@@ -5,53 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/25 15:49:42 by tcoetzee          #+#    #+#             */
-/*   Updated: 2019/05/26 12:48:11 by tcoetzee         ###   ########.fr       */
+/*   Created: 2019/08/15 15:06:46 by tcoetzee          #+#    #+#             */
+/*   Updated: 2019/08/15 15:06:47 by tcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	get_word_len(char const *str, char c)
+static int		ft_find_word(const char *str, int i, char **ret, char c)
 {
-	int	i;
-	int	len;
+	int			len;
+	int			space;
 
-	i = 0;
+	space = 0;
 	len = 0;
-	while (str[i] == c)
-		i++;
-	while (str[i] != c && str[i] != '\0')
+	while (*str == c)
 	{
-		i++;
-		len++;
+		str++;
+		space++;
 	}
-	return (len);
+	while (str[len] && str[len] != c)
+		len++;
+	if (len > 0)
+	{
+		ret[i] = ft_strnew(len);
+		ft_strncpy(ret[i], str, len);
+	}
+	return (space + len);
 }
 
-char		**ft_strsplit(char const *s, char c)
+static int		ft_count_words(const char *str, int i, char c)
 {
-	int		i;
-	int		j;
-	int		k;
-	char	**str2;
-
-	if (!s || !(str2 = (char **)malloc(sizeof(*str2) *
-		(ft_countwords(s, c) + 1))))
-		return (NULL);
-	i = -1;
-	j = 0;
-	while (++i < ft_countwords(s, c))
+	while (*str == c)
+		str++;
+	while (*str)
 	{
-		k = 0;
-		if (!(str2[i] = ft_strnew(get_word_len(&s[j], c) + 1)))
-			str2[i] = NULL;
-		while (s[j] == c)
-			j++;
-		while (s[j] != c && s[j])
-			str2[i][k++] = s[j++];
-		str2[i][k] = '\0';
+		while (*str && *str != c)
+			str++;
+		while (*str == c)
+			str++;
+		i++;
 	}
-	str2[i] = 0;
-	return (str2);
+	return (i);
+}
+
+char			**ft_strsplit(char const *s, char c)
+{
+	int			len;
+	char		**ret;
+	int			i;
+	int			wc;
+
+	if (!s)
+		return (NULL);
+	wc = ft_count_words(s, 0, c);
+	len = 0;
+	ret = (char **)ft_memalloc((wc + 1) * sizeof(char *));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	len = 0;
+	while (*s)
+	{
+		len = ft_find_word(s, i++, ret, c);
+		s += len;
+	}
+	ret[wc] = 0;
+	return (ret);
 }

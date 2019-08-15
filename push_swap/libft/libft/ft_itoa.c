@@ -5,42 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/25 13:41:08 by tcoetzee          #+#    #+#             */
-/*   Updated: 2019/05/25 13:52:46 by tcoetzee         ###   ########.fr       */
+/*   Created: 2019/08/15 15:05:03 by tcoetzee          #+#    #+#             */
+/*   Updated: 2019/08/15 15:05:09 by tcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	get_str_len(int n)
+static void	ft_itoa_helper(char **result, long int n)
 {
-	size_t	i;
+	char	*temp1;
+	char	*temp2;
 
-	i = 1;
-	while (n /= 10)
-		i++;
-	return (i);
+	temp1 = ft_itoa(n / 10);
+	temp2 = ft_itoa(n % 10);
+	*result = ft_strjoin(temp1, temp2);
+	free(temp1);
+	free(temp2);
 }
 
-char			*ft_itoa(int n)
+char		*ft_itoa(long int n)
 {
-	char			*str;
-	size_t			str_len;
-	unsigned int	n_cpy;
+	char	*result;
+	char	*temp;
 
-	str_len = get_str_len(n);
-	n_cpy = n;
+	result = NULL;
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
 	if (n < 0)
 	{
-		n_cpy = -n;
-		str_len++;
+		temp = ft_itoa(-n);
+		result = ft_strjoin("-", temp);
+		free(temp);
 	}
-	if (!(str = ft_strnew(str_len)))
-		return (NULL);
-	str[--str_len] = n_cpy % 10 + '0';
-	while (n_cpy /= 10)
-		str[--str_len] = n_cpy % 10 + '0';
-	if (n < 0)
-		*(str + 0) = '-';
-	return (str);
+	else if (n >= 10)
+		ft_itoa_helper(&result, n);
+	else if (n < 10 && n >= 0)
+	{
+		result = ft_strnew(2);
+		if (!result)
+			return (NULL);
+		result[0] = (int)n + '0';
+		result[1] = '\0';
+	}
+	return (result);
 }

@@ -5,14 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/21 13:21:31 by tcoetzee          #+#    #+#             */
-/*   Updated: 2019/05/21 13:56:10 by tcoetzee         ###   ########.fr       */
+/*   Created: 2019/08/15 15:03:47 by tcoetzee          #+#    #+#             */
+/*   Updated: 2019/08/15 15:03:50 by tcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isalpha(int i)
+int		ft_isalpha(int c)
 {
-	return (ft_islower(i) || ft_isupper(i));
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	else
+		return (0);
 }
