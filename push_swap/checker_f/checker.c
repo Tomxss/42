@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shared/shared.h"
+#include "../push_swap.h"
 
 static void		ft_use_commands(t_oper *commands, t_stack *stks)
 {
@@ -107,7 +107,7 @@ int				main(int argc, char **argv)
 	if (argc <= 1)
 		return (0);
 	stks = NULL;
-	if (ft_validator(&argc, argv, &tab, &flags) == -1)
+	if (shared_validator(&argc, argv, &tab, &flags) == -1)
 		ft_putstr_fd("Error\n", 2);
 	else if (argc <= 1 || (argc <= 2 && flags[0]) || (argc <= 2 && flags[1]))
 		;
@@ -123,5 +123,5 @@ int				main(int argc, char **argv)
 			ft_use_commands(commands, stks);
 	}
 	ft_free_all(tab, stks, &commands, flags);
-	return (0);
+	return(0);
 }

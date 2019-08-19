@@ -22,7 +22,7 @@ int				main(int argc, char **argv)
 		return (0);
 	tab = NULL;
 	stks = NULL;
-	if (ft_validator(&argc, argv, &tab, &flags) == -1)
+	if (shared_validator(&argc, argv, &tab, &flags) == -1)
 		ft_putstr_fd("Error\n", 2);
 	else
 	{
@@ -32,5 +32,5 @@ int				main(int argc, char **argv)
 			ft_putstr_fd("Error\n", 2);
 	}
 	ft_free_all(tab, stks, NULL, flags);
-	return (0);
+	return(0);
 }

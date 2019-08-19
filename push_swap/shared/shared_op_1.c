@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shared_s/push_swap.h"
+#include "../push_swap.h"
 
 void		sa(t_stack *stks)
 {

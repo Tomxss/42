@@ -118,7 +118,7 @@ static char		**ft_return_string(int *argc, char **argv)
 	return (string);
 }
 
-int				ft_validator(int *argc, char **argv, int **tab, int **flags)
+int				shared_validator(int *argc, char **argv, int **tab, int **flags)
 {
 	int			index;
 	char		**string;

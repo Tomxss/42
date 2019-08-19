@@ -14,7 +14,7 @@
 # define PUSH_SWAP_H
 # define MAXINT 2147483647
 # define MININT -2147483648
-# include "libft/libft.h"
+# include "libft/libft/libft.h"
 
 typedef struct	s_stack
 {
@@ -72,7 +72,7 @@ int				ft_isinorder(int *tab, int size);
 int				ft_is_stack_in_order(t_stack *stks);
 void			ft_free_all(
 				int *tab, t_stack *stks, t_oper **commands, int *flags);
-void			shared_print_stacks(t_stack *stks);
+void			ft_print_stacks(t_stack *stks);
 void			ft_no_change(t_stack *stks);
 void			ft_free_commands(t_oper **commands);
 int				ft_count_words(const char *str, char c);
