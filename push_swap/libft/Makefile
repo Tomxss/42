@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: akalmyko <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2016/11/22 14:50:24 by akalmyko          #+#    #+#              #
+#    Updated: 2017/01/24 13:32:05 by akalmyko         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 .PHONY: all clean fclean re silent_clean silent_fclean silent_re
 
@@ -71,7 +82,6 @@ LC += $(L)ft_strncmp.c
 LC += $(L)ft_strncpy.c
 LC += $(L)ft_strnequ.c
 LC += $(L)ft_strnew.c
-LC += $(L)ft_strndup.c
 LC += $(L)ft_strnstr.c
 LC += $(L)ft_strrchr.c
 LC += $(L)ft_strsplit.c
@@ -175,7 +185,6 @@ OF += ft_strncpy.o
 OF += ft_strnequ.o
 OF += ft_strnew.o
 OF += ft_strnstr.o
-OF += ft_strndup.o
 OF += ft_strrchr.o
 OF += ft_strsplit.o
 OF += ft_strstr.o

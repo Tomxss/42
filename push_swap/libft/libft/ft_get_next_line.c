@@ -1,92 +1,122 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl.c                                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akalmyko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 12:39:54 by tcoetzee          #+#    #+#             */
-/*   Updated: 2019/07/04 08:35:39 by tcoetzee         ###   ########.fr       */
+/*   Created: 2016/11/07 11:51:12 by akalmyko          #+#    #+#             */
+/*   Updated: 2016/11/22 16:19:32 by akalmyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ccpy(char **line, char *content, char c)
+static char			*ft_extract_end(t_node *list, int fd)
 {
-	int		i;
-	char	*tmp;
+	t_node			*temp;
 
-	i = 0;
-	tmp = *line;
-	while (content[i] && content[i] != c)
-		i++;
-	if (!(*line = ft_strndup(content, i)))
-		return (0);
-	return (i);
-}
-
-t_list	*get_curr(int fd, t_list **hlist)
-{
-	t_list	*tmp;
-
-	if (!hlist)
+	temp = list;
+	if (!temp)
 		return (NULL);
-	tmp = *hlist;
-	while (tmp)
+	while (temp)
 	{
-		if ((int)tmp->content_size == fd)
-			return (tmp);
-		tmp = tmp->next;
+		if (fd == temp->fd)
+			return (temp->end);
+		temp = temp->next;
 	}
-	tmp = ft_lstnew("", fd);
-	ft_lstadd(hlist, tmp);
-	return (tmp);
+	return (NULL);
 }
 
-int		safe_read(const int fd, char **content)
+static t_node		*new_list(t_node *list, int fd, char *end)
 {
-	int		res;
-	char	*tmp;
-	char	buf[BUFF_SIZE + 1];
+	t_node			*newlist;
 
-	while ((res = read(fd, buf, BUFF_SIZE)))
-	{
-		buf[res] = '\0';
-		tmp = *content;
-		if (!(*content = ft_strjoin(*content, buf)))
-			return (-1);
-		free(tmp);
-		if (ft_strchr(buf, '\n'))
-			break ;
-	}
-	return (res);
+	newlist = (t_node*)malloc(sizeof(t_node) * 1);
+	newlist->fd = fd;
+	if (end)
+		newlist->end = end;
+	else
+		newlist->end = NULL;
+	if (list)
+		newlist->next = list;
+	else
+		newlist->next = NULL;
+	return (newlist);
 }
 
-int		get_next_line(const int fd, char **line)
+static char			*ft_cut_the_line(char **str, char **end)
 {
-	char			buf[BUFF_SIZE + 1];
-	size_t			res;
-	static t_list	*hlist;
-	t_list			*curr;
+	int				i;
+	char			*newstr;
 	char			*tmp;
 
-	if (fd < 0 || !line || (read(fd, buf, 0)) < 0 ||
-			(!(curr = get_curr(fd, &hlist))))
-		return (-1);
-	tmp = curr->content;
-	res = safe_read(fd, &tmp);
-	curr->content = tmp;
-	if (!res && !*tmp)
-		return (0);
-	res = ccpy(line, curr->content, '\n');
-	tmp = curr->content;
-	if (tmp[res] != '\0')
+	i = 0;
+	tmp = *str;
+	while (*tmp)
 	{
-		curr->content = ft_strdup(&((curr->content)[res + 1]));
-		free(tmp);
+		if (*tmp == '\n' || *tmp++ == '\0')
+			break ;
+		i++;
 	}
+	if (i == 0 && *tmp == '\n')
+		i = 1;
+	ft_strncpy((newstr = ft_strnew(i + 1)), *str, i);
+	ft_strcpy((*end = ft_strnew(ft_strlen(tmp) + 1)), tmp);
+	free(*str);
+	*str = newstr;
+	if (**end == '\0')
+		*end = NULL;
 	else
-		tmp[0] = '\0';
+		(*end)++;
+	return (*str);
+}
+
+static int			ft_reader(int fd, char **str)
+{
+	char			buf[BUFF_SIZE + 1];
+	int				num;
+	char			*tmp;
+
+	ft_bzero(buf, BUFF_SIZE + 1);
+	if (*str == NULL)
+		*str = ft_strnew(1);
+	if ((num = read(fd, buf, BUFF_SIZE)) < 0)
+		return (-1);
+	if (num == 0)
+		return (0);
+	tmp = ft_strjoin(*str, buf);
+	free(*str);
+	*str = tmp;
+	if (ft_strchr(*str, '\n') == NULL)
+		ft_reader(fd, *&str);
+	return (1);
+}
+
+int					get_next_line(const int fd, char **line)
+{
+	char			*str;
+	char			*end;
+	char			*tmp;
+	static t_node	*list;
+
+	str = NULL;
+	if (fd < 0 || !line || (ft_reader(fd, &str) < 0))
+		return (-1);
+	if ((end = ft_extract_end(list, fd)) != NULL)
+	{
+		tmp = ft_strjoin(end, str);
+		free(str);
+		str = tmp;
+	}
+	*line = ft_cut_the_line(&str, &end);
+	if (end != NULL)
+		if (ft_strcmp(str, end) == 0)
+			free(end);
+	list = new_list(list, fd, end);
+	if (end == NULL && *str == '\0')
+		return (0);
+	if (*str == '\n' && *(str + 1) == '\0')
+		*str = '\0';
 	return (1);
 }

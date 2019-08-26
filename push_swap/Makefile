@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/08/12 09:55:32 by tcoetzee          #+#    #+#              #
-#    Updated: 2019/08/12 09:55:40 by tcoetzee         ###   ########.fr        #
+#    Created: 2019/08/23 11:28:36 by tcoetzee          #+#    #+#              #
+#    Updated: 2019/08/23 15:33:36 by tcoetzee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ NAME1 = checker
 NAME2 = push_swap
 RMS = /bin/rm -rf
 LIBFT_F = libft/
-SHARED_F = shared/
-PUSH_SWAP_F = push_swap_f/
-CHECKER_F = checker_f/
+SHARED_F = shared_s/
+PUSH_SWAP_F = push_swap_s/
+CHECKER_F = checker_s/
 CHECKER = $(NAME1)
 PUSH_SWAP = $(NAME2)
 
