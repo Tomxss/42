@@ -34,16 +34,10 @@ static int		ft_atoi_werror(const char *str, int *error)
 			(*error)++;
 			str++;
 		}
-		if (*str >= 1 && *str <= 127)
-		{
-			ft_printf("Fault: Invalid Value. please remove %s\n", str);
+		result = result * sign;
+		if (*str >= 1 && *str <= 127 || result < MININT || result > MAXINT)
 			return (*error = 0);
-		}
-
 	}
-	result = result * sign;
-	if (result < -2147483648 || result > 2147483647)
-		return (*error = 0);
 	return ((int)result);
 }
 
