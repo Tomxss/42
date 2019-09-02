@@ -79,8 +79,8 @@ static int		ft_main_loop(t_stack *stks, int i, t_oper *steps, t_oper *alt)
 			steps = ft_add_step(steps, 4);
 		else
 		{
-			alt = ft_check_push_to_top_b(stks);
-			steps = ft_internal_loop(stks, i, i, 0);
+			alt = ft_check_push_to_top_b(stks); //checks whether it would be a good idea to do pb and organises a in the best way to do the best pb
+			steps = ft_internal_loop(stks, i, i, 0);	
 			if (alt && alt->holder->num <= steps->holder->num)
 			{
 				ft_free_steps(&steps);

@@ -51,18 +51,18 @@ t_oper				*ft_check_push_to_top_b(t_stack *s)
 	int				up_a;
 	int				dw_a;
 
-	ntopb = s->stk_b[s->top_b];
-	top_a = s->top_a;
-	while (top_a != s->size - 1)
+	ntopb = s->stk_b[s->top_b];	//stack b's top value
+	top_a = s->top_a;	//stack a's top indice
+	while (top_a != s->size - 1)	// a indice != stack size - 1
 	{
-		if (s->stk_a[top_a] > ntopb && s->stk_a[top_a] < s->stk_b[s->size - 1])
+		if (s->stk_a[top_a] > ntopb && s->stk_a[top_a] < s->stk_b[s->size - 1])	// a_top_value > b_top_value && a_top_value < b_bot_value
 		{
-			up_a = ft_up_a(s, top_a);
-			dw_a = ft_down_a(s, top_a);
-			if (up_a > dw_a)
-				return (ft_to_b_down(dw_a));
+			up_a = ft_up_a(s, top_a);	//if a_top_indice has changed from its original value then "a_top_indice(const) - a_top_indice(variable), if result negative make it positive" else 0
+			dw_a = ft_down_a(s, top_a);	//if a_top_indice is the original/variable value with exception(a_amount_of_elements != 1) then "stack_size - a_top_indice" else 0
+			if (up_a > dw_a) //Do the smallest one
+				return (ft_to_b_down(dw_a));	//for the value of dw_a do rra and then end off with a pb
 			else
-				return (ft_to_b_up(up_a));
+				return (ft_to_b_up(up_a));	//for the value of up_a do ra and then end off with a pb
 		}
 		top_a++;
 	}
