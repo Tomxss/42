@@ -27,17 +27,17 @@ static t_oper	*ft_check_steps(t_stack *stks, int index)
 	ft_set_min_max_b(stks);
 	up_a = ft_up_a(stks, index);	//rra : if a_top_indice has changed from its original value then "a_top_indice(const) - a_top_indice(variable), if result negative make it positive" else 0
 	down_a = ft_down_a(stks, index);	//ra : //if a_top_indice is the original/variable value with exception(a_amount_of_elements != 1) then "stack_size - a_top_indice" else 0
-	up_b = ft_up_b(stks, index);	//rrb?	//sa OR top_indice - max_indice
-	down_b = ft_down_b(stks, index);	//rb?
-	winner = ft_candidates(up_a, down_a, up_b, down_b);
+	up_b = ft_up_b(stks, index);	//rrb? no	//sa OR top_indice - max_indice
+	down_b = ft_down_b(stks, index);	//rb? no //steps = stack_size - b_max_index
+	winner = ft_candidates(up_a, down_a, up_b, down_b);	// returns a suitable candidate
 	if (winner == 0)
-		return (ft_ua_ub(up_a, up_b));
+		return (ft_ua_ub(up_a, up_b));	//up_a, up_b : if both are positive rr, if ua is positive ra, if ub is positive rb. end with pb
 	else if (winner == 1)
-		return (ft_da_db(down_a, down_b));
+		return (ft_da_db(down_a, down_b));	//down_a, down_b : if both are positive rrr, if down_a is positive rra, if down_b is positive rrb. end with pb
 	else if (winner == 2)
-		return (ft_ua_db(up_a, down_b));
+		return (ft_ua_db(up_a, down_b));	//up_a, down_b : if up_a is positive ra, if down_b is positive rrb. end with pb
 	else if (winner == 3)
-		return (ft_da_ub(down_a, up_b));
+		return (ft_da_ub(down_a, up_b));	//down_a, up_b : if down_a is positive rra, if up_b is positive rb. end with pb
 	else
 		return (NULL);
 }
@@ -50,9 +50,9 @@ static t_oper	*ft_internal_loop(t_stack *s, int in, int ex, int num_oper)
 	answer = NULL;
 	while (in < s->size)	//indice(given) < stack_size
 	{
-		if (!(candidate = ft_check_steps(s, in)))	//
+		if (!(candidate = ft_check_steps(s, in)))	//checks whether to ua,da,ub,db
 			break ;	//if there are no candidates then break out of while loop.
-		if (in == ex)
+		if (in == ex)	//the indice has not moved from its original position
 		{
 			num_oper = candidate->holder->num;
 			answer = candidate;
@@ -80,8 +80,8 @@ static int		ft_main_loop(t_stack *stks, int i, t_oper *steps, t_oper *alt)
 		else
 		{
 			alt = ft_check_push_to_top_b(stks); //checks whether it would be a good idea to do pb and organises a in the best way to do the best pb
-			steps = ft_internal_loop(stks, i, i, 0);
-			if (alt && alt->holder->num <= steps->holder->num)
+			steps = ft_internal_loop(stks, i, i, 0);	//checks whether to ua,ub,da,db
+			if (alt && alt->holder->num <= steps->holder->num)	//alt_amount_of_steps <= step_amount of steps
 			{
 				ft_free_steps(&steps);
 				steps = alt;
@@ -89,9 +89,9 @@ static int		ft_main_loop(t_stack *stks, int i, t_oper *steps, t_oper *alt)
 			else if (alt)
 				ft_free_steps(&alt);
 		}
-		ft_use_print_and_free(stks, &steps);
+		ft_use_print_and_free(stks, &steps);	//print, execute and free
 		i++;
-		if (stks->elems_a == 5)
+		if (stks->elems_a == 5)	//when elems in a reaches 5 break.
 			break ;
 	}
 	ft_make_nice_a_and_say_bye_to_b(stks);

@@ -27,9 +27,9 @@ static void		ft_check_after_max_b(t_stack *s, int *win, int *elem, int index)
 
 	*elem = 0;
 	b_max_index = s->b_mxi;
-	while (b_max_index < s->size)
+	while (b_max_index < s->size)	//b_max_index < stack_size
 	{
-		if (s->stk_a[index] > s->stk_b[b_max_index])
+		if (s->stk_a[index] > s->stk_b[b_max_index])	//a_top_value > b_max_index
 		{
 			*win = b_max_index;
 			(*elem) = s->elems_b;
@@ -49,7 +49,7 @@ static void		ft_check_before_max_b(t_stack *s, int *win, int index)
 	top_b = s->top_b;
 	while (top_b != b_max_index)
 	{
-		if (s->stk_a[index] > s->stk_b[top_b])
+		if (s->stk_a[index] > s->stk_b[top_b]) //a_top_value > b_top_value
 		{
 			*win = top_b;
 			break ;
@@ -64,16 +64,16 @@ int				ft_down_b(t_stack *s, int index)
 	int			elem;
 	int			winner;
 
-	if (s->stk_a[index] > s->b_max)
-		steps = ft_down_b_helper(s, s->b_mxi);
-	else if (s->stk_a[index] < s->b_min)
-		steps = ft_down_b_helper(s, s->b_mxi);
+	if (s->stk_a[index] > s->b_max)	//a_top_value > b_max_value
+		steps = ft_down_b_helper(s, s->b_mxi);	//steps = stack_size - b_max_index
+	else if (s->stk_a[index] < s->b_min)	//a_top_value < b_min_index
+		steps = ft_down_b_helper(s, s->b_mxi);	//steps = stack_size - b_max_index
 	else
 	{
-		ft_check_after_max_b(s, &winner, &elem, index);
-		if (elem < s->elems_b)
-			ft_check_before_max_b(s, &winner, index);
-		steps = ft_down_b_helper(s, winner);
+		ft_check_after_max_b(s, &winner, &elem, index);	//increment elem until a_top_value > b_max_value is found and win is set
+		if (elem < s->elems_b)	//elements < b_amount_of_elements
+			ft_check_before_max_b(s, &winner, index);	//increment top_b until a_top_value > b_top_value is found and win is set
+		steps = ft_down_b_helper(s, winner);	//steps = stack_size - b_max_index
 	}
 	return (steps);
 }
