@@ -25,10 +25,10 @@ static t_oper	*ft_check_steps(t_stack *stks, int index)
 	int			winner;
 
 	ft_set_min_max_b(stks);
-	up_a = ft_up_a(stks, index);
-	down_a = ft_down_a(stks, index);
-	up_b = ft_up_b(stks, index);
-	down_b = ft_down_b(stks, index);
+	up_a = ft_up_a(stks, index);	//rra : if a_top_indice has changed from its original value then "a_top_indice(const) - a_top_indice(variable), if result negative make it positive" else 0
+	down_a = ft_down_a(stks, index);	//ra : //if a_top_indice is the original/variable value with exception(a_amount_of_elements != 1) then "stack_size - a_top_indice" else 0
+	up_b = ft_up_b(stks, index);	//rrb?	//sa OR top_indice - max_indice
+	down_b = ft_down_b(stks, index);	//rb?
 	winner = ft_candidates(up_a, down_a, up_b, down_b);
 	if (winner == 0)
 		return (ft_ua_ub(up_a, up_b));
@@ -48,10 +48,10 @@ static t_oper	*ft_internal_loop(t_stack *s, int in, int ex, int num_oper)
 	t_oper		*answer;
 
 	answer = NULL;
-	while (in < s->size)
+	while (in < s->size)	//indice(given) < stack_size
 	{
-		if (!(candidate = ft_check_steps(s, in)))
-			break ;
+		if (!(candidate = ft_check_steps(s, in)))	//
+			break ;	//if there are no candidates then break out of while loop.
 		if (in == ex)
 		{
 			num_oper = candidate->holder->num;
@@ -80,7 +80,7 @@ static int		ft_main_loop(t_stack *stks, int i, t_oper *steps, t_oper *alt)
 		else
 		{
 			alt = ft_check_push_to_top_b(stks); //checks whether it would be a good idea to do pb and organises a in the best way to do the best pb
-			steps = ft_internal_loop(stks, i, i, 0);	
+			steps = ft_internal_loop(stks, i, i, 0);
 			if (alt && alt->holder->num <= steps->holder->num)
 			{
 				ft_free_steps(&steps);
