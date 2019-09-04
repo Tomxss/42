@@ -1,4 +1,4 @@
-#include "../shared_f/push_swap.h"
+#include "push_swap.h"
 
 int main(int ac, char **av)
 {
@@ -14,11 +14,11 @@ int main(int ac, char **av)
     ft_putstr_fd("Error\n", 2);
   else
   {
-    if (!(stacks = ft_new_stks(*&formatted_input, ac - flags[0] - flags[1], flags)))
+    if (!(stacks = initiate_stacks(*&formatted_input, ac - flags[0] - flags[1], flags)))
       ft_putstr_fd("Error\n", 2);
     else if (push_swap(*&stacks) == -1)
       ft_putstr_fd("Error\n", 2);
   }
-  free_all(tab, stacks, NULL, flags);
+  free_all(formatted_input, stacks, NULL, flags);
   return (0);
 }

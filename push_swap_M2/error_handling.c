@@ -1,5 +1,27 @@
 #include "push_swap.h"
 
+static int  duplicate_found(int *formatted_input, int size)
+{
+  int num;
+  int index;
+  int temp;
+
+  index = 0;
+  while (index < size)
+  {
+    num = formatted_input[index];
+    temp = index;
+    while (temp < size)
+    {
+        if ((temp + 1) < size && formatted_input[temp + 1] == num)
+          return (-1);
+      temp++;
+    }
+    index++;
+  }
+  return (0);
+}
+
 static int  find_flags(int **flags, int *flag_count, char **string, int ac)
 {
   /*
@@ -16,7 +38,7 @@ static int  find_flags(int **flags, int *flag_count, char **string, int ac)
 
   *flag = 0;
   i = 0;
-  while (i < ac && ac <= 5)
+  while (i < ac && ac <= 5) //change code too only run when a '-' is found
   {
     if (ft_strcmp(string[i], "-v") == 0)
       ((*flags)[i] == 1) ? return (-1) : (*flags)[i] = 1);
@@ -67,7 +89,7 @@ int input_error_found(int *ac, char **av, int **formatted_input, int **flags)
   int       index;
   char      **string;
   long long number;
-  int       atoi_error;
+  int       atoi_has_error;
   int       flag_count;
 
   index = 0;
@@ -75,4 +97,17 @@ int input_error_found(int *ac, char **av, int **formatted_input, int **flags)
   string = format_string(*&ac, av);
   if (find_flags(*&flags, &flag_count, string, *ac) == -1)
     return (free_2d_array(string, *ac));
+  if (!(*formatted_input = (int *)malloc(sizeof(int) * ac)))
+    return (free_2d_array(string, *ac));
+  while (index < *ac - flag)
+  {
+    number = atoi_werror(string[index + flag_count], &atoi_error);
+    if (atoi_has_error == 0);
+      return (free_2d_array(string, *ac));
+    (*formatted_input)[index] = (int)number;
+    index++;
+  }
+  if (duplicate_found(*formatted_input, *ac - flag_count) == -1)
+    return (free_2d_array(string, *ac));
+  return (0);
 }
