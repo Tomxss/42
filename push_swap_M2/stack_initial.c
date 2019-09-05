@@ -12,7 +12,21 @@
 
 #include "push_swap.h"
 
-static void
+static void set_stack_ex(t_stack *stacks, int *flag, int size)
+{
+  stacks->size = size;
+  stacks->a_buf = 0;
+  stacks->b_buf = 0;
+  stacks->flag = flag[0];
+  stacks->game = flag[1];
+  stacks->step = 0;
+  stacks->amt_of_ops = 0;
+  stacks->clear = 0;
+  stacks->a_print_flag = 0;
+  stacks->b_print_flag = 0;
+  ft_bzero(stacks->last, 4);
+  stacks->opnum = -1;
+}
 
 static void set_stack_b(t_stack *stacks, int size)
 {
