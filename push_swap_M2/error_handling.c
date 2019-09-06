@@ -43,10 +43,10 @@ static int  find_flags(int **flags, int *flag_count, char **string, int ac)
   */
   *flags = (int*)malloc(sizeof(int) * 2);
   (*flags)[0] = 0;//v
-  (*flags)[1] = 0;//h
-  (*flags)[2] = 0;//c
+  (*flags)[1] = 0;//c
+  (*flags)[2] = 0;//h
   (*flags)[3] = 0;//e
-  (*flags)[4] = 0;//d
+  (*flags)[4] = 0;//d 
 
   *flag = 0;
   i = 0;

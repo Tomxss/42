@@ -39,9 +39,9 @@ typedef struct s_stack
   int   b_mni;
 
   int   size;
-  int   flag;
+  int   verbose_flag;
   int   amt_of_ops;
-  int   step;
+  int   amt_of_steps;
   int   game;
   int   clear;
   char  last[4];

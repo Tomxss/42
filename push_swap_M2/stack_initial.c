@@ -17,7 +17,7 @@ static void set_stack_ex(t_stack *stacks, int *flag, int size)
   stacks->size = size;
   stacks->a_buf = 0;
   stacks->b_buf = 0;
-  stacks->flag = flag[0];
+  stacks->verbose = flag[0];
   stacks->game = flag[1];
   stacks->step = 0;
   stacks->amt_of_ops = 0;
@@ -64,7 +64,7 @@ t_stack *initiate_stacks(int *stack_a, int size, int *flag)
     return (NULL);
   }
   set_stack_ex(stacks, flag, size);
-  if (!flag[1])
-    print_stacks(stacks);
+  if (flag[0])
+    activate_verbose(stacks);
   return (stacks);
 }
