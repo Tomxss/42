@@ -41,7 +41,40 @@ static int	atoi_werror(const char *str, int *error)
 	return ((int)result);
 }
 
-int ft_free_2d_array(char **array, int size)
+void free_commands(t_oper **commands)
+{
+	t_oper	*current;
+	t_oper	*head;
+
+	current = *commands;
+	if (current == NULL)
+		return ;
+	while (current)
+	{
+		head = current->next;
+		if (current->oper)
+			free(current->oper);
+		free(current);
+		current = NULL;
+		current = head;
+	}
+	*commands = NULL;
+}
+
+void free_all(int *formatted_input, t_stack *stacks, t_oper **commands, int *flags)
+{
+	free(formatted_input);
+	if (stacks)
+	{
+		free(stacks->stack_b);
+		free(stacks);
+	}
+	if (commands)
+		free_commands(*&commands);
+	free(flags);
+}
+
+int free_2d_array(char **array, int size)
 {
 	int  index;
 
