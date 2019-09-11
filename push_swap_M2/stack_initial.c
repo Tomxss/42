@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void set_stack_ex(t_stack *stacks, int *flag, int size)
+static void set_stack_ext(t_stack *stacks, int *flag, int size)
 {
   stacks->size = size;
   stacks->a_buf = 0;
@@ -63,7 +63,7 @@ t_stack *initiate_stacks(int *stack_a, int size, int *flag)
     free(stacks);
     return (NULL);
   }
-  set_stack_ex(stacks, flag, size);
+  set_stack_ext(stacks, flag, size);
   if (flag[0])
     activate_verbose(stacks);
   return (stacks);

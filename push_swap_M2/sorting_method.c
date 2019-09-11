@@ -1,5 +1,25 @@
 #include "push_swap.h"
 
+int quintet(t_stack *stacks, int scene)
+{
+  t_oper  *steps;
+
+  steps = add_step(NULL, 4);
+  if (stacks->a_amt_of_elems == 5 || stacks->size == 5)
+    steps = add_step(steps, 4);
+  trio(stacks, steps, scene);
+  steps = alpha(NULL, stacks);
+  exec_free(stacks, &steps);
+  if (stacks->size == 5 || stacks->a_amt_of_elems == 5 || scene == 3)
+  {
+    set_a_min_max(stacks);
+    steps = bravo(NULL, stacks);
+    exec_free(stacks, &steps);
+  }
+  clean_a(stacks);
+  return (1);
+}
+
 int trio(t_stack *stacks, t_oper *steps_quintet, int scene)
 {
   t_oper *steps;
@@ -25,6 +45,7 @@ int trio(t_stack *stacks, t_oper *steps_quintet, int scene)
     steps = steps_for_trio(stacks, &steps);
     exec_free(stacks, &steps);
   }
+  return (1);
 }
 
 int duo(t_stack *stacks)
