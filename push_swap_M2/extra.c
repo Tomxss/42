@@ -12,6 +12,49 @@
 
 #include "push_swap.h"
 
+static void print_operation(t_oper **temp, t_stack *stacks)
+{
+	t_oper *head;
+
+	head = (*temp)->next;
+	if (stacks->verbose_flag == 0)
+	{
+		ft_putstr((*temp)->operations);
+		ft_putchar('\n');
+	}
+	free((*temp)->operations);
+	free((*temp));
+	*temp = NULL;
+	*temp = head;
+}
+
+void 				exec_free(t_stack *stacks, t_oper **results)
+{
+	t_oper	*temp;
+	void 		(*oper[11])(t_stack*);
+
+	if (*results == NULL)
+		return ;
+	oper[0] = &sa;
+	oper[1] = &sb;
+	oper[2] = &ss;
+	oper[3] = &pa;
+	oper[4] = &pb;
+	oper[5] = &ra;
+	oper[6] = &rb;
+	oper[7] = &rr;
+	oper[8] = &rra;
+	oper[9] = &rrb;
+	oper[10] = &rrr;
+	temp = (*results)->head;
+	while (temp)
+	{
+		oper[temp->command](stacks);
+		print_operation(&temp, stacks);
+	}
+	*results = NULL;
+}
+
 static int	atoi_werror(const char *str, int *error)
 {
 	long long result;
