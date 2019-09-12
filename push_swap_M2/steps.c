@@ -1,5 +1,62 @@
 #include "push_swap.h"
 
+void			clean_a(t_stack *stacks)
+{
+	t_oper *steps;
+
+	steps = NULL;
+	set_min_max_a(stacks);
+	if (stacks->a_mxi == stacks->a_top)
+		steps = add_step(NULL, 5);
+	if (stacks->elems_a == 4)
+	{
+		if (stacks->a_mxi == stacks->a_top + 1)
+			steps = add_step(add_step(NULL, 8), 8);
+		else if (stacks->a_mxi == stacks->a_top + 2)
+			steps = add_step(NULL, 8);
+	}
+	else
+	{
+		if (stacks->a_mxi == stacks->a_top + 1)
+			steps = add_step(add_step(NULL, 5), 5);
+		else if (stacks->a_mxi == stacks->a_top + 2)
+			steps = add_step(add_step(NULL, 8), 8);
+		else if (stacks->a_mxi == stacks->a_top + 3)
+			steps = add_step(NULL, 8);
+	}
+	exec_free(stacks, &steps);
+}
+
+static t_oper	*bravo(t_oper *steps, t_stack *stacks)
+{
+	int			place;
+
+	place = a_placement(stacks);
+	if (place == stacks->a_top)
+		;
+	else if (place == stacks->a_top + 1)
+		steps = add_step(steps, 5);
+	else if (place == stacks->a_top + 2)
+		steps = add_step(add_step(steps, 5), 5);
+	else if (place == stacks->a_top + 3)
+		steps = add_step(steps, 8);
+	return (add_step(steps, 3));
+}
+
+static t_oper	*alpha(t_oper *steps, t_stack *stacks)
+{
+	set_a_min_max(stacks);
+	if (s->stack_b[stacks->b_top] < stacks->a_min)
+		steps = add_step(steps, 3);
+	else if (s->stack_b[stacks->b_top] > stacks->a_max)
+		steps = add_step(steps, 3);
+	else if (s->stack_b[stacks->b_top] < stacks->stack_a[s->a_top + 1])
+		steps = add_step(add_step(steps, 5), 3);
+	else if (s->stack_b[stacks->b_top] > stacks->stack_a[s->a_top + 1])
+		steps = add_step(add_step(steps, 8), 3);
+	return (steps);
+}
+
 static char   *get_step_name(int oper)
 {
   if (oper == 0)
