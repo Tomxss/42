@@ -1,5 +1,134 @@
 #include "push_swap.h"
 
+t_oper			*ua_ub(int ua, int ub)
+{
+	t_oper		*steps;
+	int			num;
+
+	steps = NULL;
+	if (ua > ub)	//up_a_step_num > up_b_step_num
+		num = ua;
+	else
+		num = ub;
+	while (num--)
+	{
+		if (ua > 0 && ub > 0)	// up_a_step_num is positive && up_b_step_num is positive
+		{
+			steps = add_step(steps, 7);	//rr
+		}
+		else
+		{
+			if (ua > 0)
+				steps = add_step(steps, 5);	//ra
+			if (ub > 0)
+				steps = add_step(steps, 6);	//rb
+		}
+		ua--;
+		ub--;
+	}
+	return (add_step(steps, 4));	//pb
+}
+
+t_oper			*da_db(int da, int db)
+{
+	t_oper		*steps;
+	int			num;
+
+	steps = NULL;
+	if (da > db)
+		num = da;
+	else
+		num = db;
+	while (num--)
+	{
+		if (da > 0 && db > 0)	//down_a is positive && down_b is positive
+			steps = add_step(steps, 10);	//rrr
+		else
+		{
+			if (da > 0)//only down_a is positive
+				steps = add_step(steps, 8);	//rra
+			if (db > 0)//only down_b is positive
+				steps = add_step(steps, 9);	//rrb
+		}
+		if (da > 0)
+			da--;
+		if (db > 0)
+			db--;
+	}
+	return (add_step(steps, 4));	//pb
+}
+
+t_oper			*ua_db(int ua, int db)
+{
+	t_oper		*steps;
+	int			num;
+
+	steps = NULL;
+	num = ua + db;
+	while (num)
+	{
+		if (ua > 0)
+			steps = add_step(steps, 5);	//ra
+		if (db > 0)
+			steps = add_step(steps, 9);	//rrb
+		if (ua > 0)
+			ua--;
+		if (db > 0)
+			db--;
+		num--;
+	}
+	return (ft_add_step(steps, 4));	//pb
+}
+
+t_oper			*da_ub(int da, int ub)
+{
+	t_oper		*steps;
+	int			num;
+
+	steps = NULL;
+	num = da + ub;
+	while (num)
+	{
+		if (da > 0)
+			steps = add_step(steps, 8);	//rra
+		if (ub > 0)
+			steps = add_step(steps, 6);	//rb
+		da--;
+		ub--;
+		num--;
+	}
+	return (ft_add_step(steps, 4));	//pb
+}
+
+int				candidates(int ua, int da, int ub, int db)
+{
+	int			candidate[5];
+	int			index;
+	int			winner;
+
+	candidate[0] = ua - ub;	//can[0] = up_a_step_num - up_b_step_num
+	if (candidate[0] < 0)
+		candidate[0] = -candidate[0];	//make candidate[0] positive
+	candidate[1] = da - db;	//can[1] = down_a_step_num - down_b_step_num
+	if (candidate[1] < 0)
+		candidate[1] = -candidate[1];	//make candidate[1] positive
+	candidate[2] = ua + db;	//can[2] = up_a_step_num + down_b_step_num
+	candidate[3] = da + ub;	//can[3] = down_a_step_num + up_b_step_num
+	candidate[4] = candidate[0];
+	index = 0;
+	winner = 0;
+	while (index < 4)
+	{
+		if (candidate[index] <= candidate[4])
+		{
+			candidate[4] = candidate[index];
+			winner = index;
+		}
+		index++;
+	}
+	return (winner);
+}
+
 void			finalize_stacks(t_stack *stacks)
 {
 	int		place;
@@ -14,6 +143,35 @@ void			finalize_stacks(t_stack *stacks)
 	}
 	set_a_min_max_(stacks);
 	rotate_a(stacks, stacks->a_mni, 0, 0);
+}
+/* * * * *
+* * * * *	EVERYTHING TO DO WITH STEPS
+*/
+
+static t_oper	*check_steps(t_stack *stacks, int index)
+{
+	int			up_a;
+	int			up_b;
+	int			down_a;
+	int			down_b;
+	int			winner;
+
+	set_b_min_max(stacks);
+	up_a = up_a(stacks, index);
+	down_a = down_a(stacks, index);
+	up_b = up_b(stacks, index);
+	down_b = down_b(stacks, index);
+	winner = candidates(up_a, down_a, up_b, down_b);
+	if (winner == 0)
+		return (ua_ub(up_a, up_b));
+	else if (winner == 1)
+		return (da_db(down_a, down_b));
+	else if (winner == 2)
+		return (ua_db(up_a, down_b));
+	else if (winner == 3)
+		return (da_ub(down_a, up_b));
+	else
+		return (NULL);
 }
 
 void			free_steps(t_oper **list)
@@ -72,7 +230,7 @@ t_oper				*alternative_loop(t_stack *stacks)
 	a_top = stacks->a_top;
 	while (a_top != stacks->size - 1)
 	{
-		if (stacks->stk_a[a_top] > ntopb && stacks->stk_a[a_top] < stacks->stack_b[stacks->size - 1])
+		if (stacks->stack_a[a_top] > ntopb && stacks->stack_a[a_top] < stacks->stack_b[stacks->size - 1])
 		{
 			up_a = up_a(stacks, a_top);
 			dw_a = down_a(stacks, a_top);

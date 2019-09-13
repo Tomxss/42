@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 void set_a_min_max(t_stack *stacks)
 {
   int i;
@@ -21,4 +23,29 @@ void set_a_min_max(t_stack *stacks)
     }
     i++;
   }
+}
+
+void			set_b_min_max(t_stack *stacks)
+{
+	int			i;
+
+	i = stacks->top_b;
+	stacks->b_min = stacks->stack_b[i];
+	stacks->b_mni = i;
+	stacks->b_max = stacks->stack_b[i];
+	stacks->b_mxi = i;
+	while (i < stacks->size)
+	{
+		if (stacks->stack_b[i] <= stacks->b_min)
+		{
+			stacks->b_min = stacks->stack_b[i];
+			stacks->b_mni = i;
+		}
+		if (stacks->stack_b[i] >= stacks->b_max)
+		{
+			stacks->b_max = stks->stack_b[i];
+			stacks->b_mxi = i;
+		}
+		i++;
+	}
 }

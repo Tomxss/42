@@ -1,5 +1,124 @@
 #include "push_swap.h"
 
+static void		upf(t_oper **copy, t_stack *stks)
+{
+	t_oper		*holder;
+
+	holder = (*copy)->next;
+	if (stks->flag == 0)
+	{
+		ft_putstr((*copy)->oper);
+		ft_putchar('\n');
+	}
+	free((*copy)->oper);
+	free((*copy));
+	*copy = NULL;
+	*copy = holder;
+}
+
+static int		return_brother(t_stack *s)
+{
+	int		index;
+	int		b;
+	int		a;
+
+	index = s->a_top;
+	a = s->stack_a[s->a_top];
+	b = s->stack_b[s->b_top];
+	while (index < s->size)
+	{
+		if (b < s->stack_a[index] && a > s->stack_a[index])
+			return (index);
+		index++;
+	}
+	return (-1);
+}
+
+static int		return_place(t_stack *s)
+{
+	int		index;
+	int		b;
+	int		brother;
+
+	index = s->a_top;
+	b = s->stack_b[s->b_top];
+	set_min_max_a(s);
+	if ((brother = return_brother(s)) != -1)
+		return (brother);
+	if (b > s->a_max)
+		return (s->a_mni);
+	if (b < s->a_min)
+		return (s->a_mni);
+	while (index != s->size - 1)
+	{
+		if (b < s->stack_a[index])
+			return (index);
+		else if (b > s->stack_a[index] && b < s->stack_a[index + 1]
+				&& s->stack_a[index + 1] == s->size - 1)
+			return (index + 1);
+		else if (b > s->stack_a[index] && b < s->stack_a[index + 1])
+			return (index + 1);
+		index++;
+	}
+	return (0);
+}
+
+static void		rotate_a(t_stack *stks, int place, int up_a, int down_a)
+{
+	int		num;
+
+	set_min_max_a(stks);
+	up_a = up_a(stks, place);
+	down_a = down_a(stks, place);
+	num = down_a;
+	(up_a <= down_a) ? (num = up_a) : (num);
+	if (stks->a_mni != 0)
+	{
+		while (num--)
+		{
+			if (up_a < down_a)
+			{
+				ra(stks);
+				if (stks->flag == 0)
+					ft_putstr("ra\n");
+			}
+			else
+			{
+				rra(stks);
+				if (stks->flag == 0)
+					ft_putstr("rra\n");
+			}
+		}
+	}
+}
+
+static int		a_placement(t_stack *stks)
+{
+	int			index;
+	int			elem;
+
+	index = stks->a_mni;
+	elem = 4;
+	if (stks->stack_b[stks->top_b] < stks->a_min)
+		return (stks->a_mni);
+	else if (stks->stack_b[stks->top_b] > stks->a_max)
+		return (stks->a_mni);
+	while ((index < stks->size))
+	{
+		if (stks->stack_b[stks->top_b] < stks->stack_a[index++])
+			return (--index);
+		elem--;
+	}
+	if (elem > 1)
+	{
+		index = stks->top_a;
+		while (index != stks->a_mni)
+			if (stks->stack_b[stks->top_b] < stks->stack_a[index++])
+				return (--index);
+	}
+	return (0);
+}
+
 void			clean_a(t_stack *stacks)
 {
 	t_oper *steps;
