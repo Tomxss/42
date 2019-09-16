@@ -1,61 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra.c                                            :+:      :+:    :+:   */
+/*   extra_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 11:14:54 by tcoetzee          #+#    #+#             */
-/*   Updated: 2019/09/05 11:14:56 by tcoetzee         ###   ########.fr       */
+/*   Created: 2019/09/16 16:01:46 by tcoetzee          #+#    #+#             */
+/*   Updated: 2019/09/16 16:02:05 by tcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-static void print_operation(t_oper **temp, t_stack *stacks)
-{
-	t_oper *head;
-
-	head = (*temp)->next;
-	if (stacks->verbose_flag == 0)
-	{
-		ft_putstr((*temp)->operations);
-		ft_putchar('\n');
-	}
-	free((*temp)->operations);
-	free((*temp));
-	*temp = NULL;
-	*temp = head;
-}
-
-void 				exec_free(t_stack *stacks, t_oper **results)
-{
-	t_oper	*temp;
-	void 		(*oper[11])(t_stack*);
-
-	if (*results == NULL)
-		return ;
-	oper[0] = &sa;
-	oper[1] = &sb;
-	oper[2] = &ss;
-	oper[3] = &pa;
-	oper[4] = &pb;
-	oper[5] = &ra;
-	oper[6] = &rb;
-	oper[7] = &rr;
-	oper[8] = &rra;
-	oper[9] = &rrb;
-	oper[10] = &rrr;
-	temp = (*results)->head;
-	while (temp)
-	{
-		oper[temp->command](stacks);
-		print_operation(&temp, stacks);
-	}
-	*results = NULL;
-}
-
-static int	atoi_werror(const char *str, int *error)
+int			atoi_werror(const char *str, int *error)
 {
 	long long result;
 	long long sign;
@@ -73,18 +28,18 @@ static int	atoi_werror(const char *str, int *error)
 			str++;
 		while (*str >= '0' && *str <= '9')
 		{
-				result =+ result * 10 + (*str - '0');
-				(*error)++;
-				str++;
+			result += result * 10 + (*str - '0');
+			(*error)++;
+			str++;
 		}
 		result = result * sign;
-		if (*str < 48 && *str > 57) || result < MININT || result > MAXINT)
+		if ((*str < 48 && *str > 57) || result < MININT || result > MAXINT)
 			return (*error = 0);
 	}
 	return ((int)result);
 }
 
-void free_commands(t_oper **commands)
+void		free_commands(t_oper **commands)
 {
 	t_oper	*current;
 	t_oper	*head;
@@ -95,8 +50,8 @@ void free_commands(t_oper **commands)
 	while (current)
 	{
 		head = current->next;
-		if (current->oper)
-			free(current->oper);
+		if (current->operations)
+			free(current->operations);
 		free(current);
 		current = NULL;
 		current = head;
@@ -104,7 +59,8 @@ void free_commands(t_oper **commands)
 	*commands = NULL;
 }
 
-void free_all(int *formatted_input, t_stack *stacks, t_oper **commands, int *flags)
+void		free_all(int *formatted_input, t_stack *stacks, \
+			t_oper **commands, int *flags)
 {
 	free(formatted_input);
 	if (stacks)
@@ -117,9 +73,9 @@ void free_all(int *formatted_input, t_stack *stacks, t_oper **commands, int *fla
 	free(flags);
 }
 
-int free_2d_array(char **array, int size)
+int			free_2d_array(char **array, int size)
 {
-	int  index;
+	int	index;
 
 	index = 0;
 	if (!array)

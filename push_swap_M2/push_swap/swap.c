@@ -6,30 +6,30 @@
 /*   By: tcoetzee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 11:26:55 by tcoetzee          #+#    #+#             */
-/*   Updated: 2019/08/23 11:26:56 by tcoetzee         ###   ########.fr       */
+/*   Updated: 2019/09/16 17:06:11 by tcoetzee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shared_s/push_swap.h"
+#include "push_swap.h"
 
 /*
 ** swap a - swap the first 2 elements at the top of stack a.
 ** Do nothing if there is only one or no elements).
 */
 
-void		sa(t_stack *stks)
+void		sa(t_stack *stacks)
 {
 	int		top;
 
-	ft_strcpy(stks->last, "sa");
-	stks->opnum = 0;
-	if (stks->elems_a < 2)
-		return (ft_no_change(stks));
-	top = stks->top_a;
-	stks->buf_a = stks->stk_a[top];
-	stks->stk_a[top] = stks->stk_a[top + 1];
-	stks->stk_a[top + 1] = stks->buf_a;
-	ft_print_stacks(stks);
+	ft_strcpy(stacks->last, "sa");
+	stacks->opnum = 0;
+	if (stacks->a_amt_of_elems < 2)
+		return (no_change(stacks));
+	top = stacks->a_top;
+	stacks->a_buf = stacks->stack_a[top];
+	stacks->stack_a[top] = stacks->stack_a[top + 1];
+	stacks->stack_a[top + 1] = stacks->a_buf;
+	activate_verbose(stacks);
 }
 
 /*
@@ -37,40 +37,40 @@ void		sa(t_stack *stks)
 ** Do nothing if there is only one or no elements).
 */
 
-void		sb(t_stack *stks)
+void		sb(t_stack *stacks)
 {
 	int		top;
 
-	ft_strcpy(stks->last, "sb");
-	stks->opnum = 1;
-	if (stks->elems_b < 2)
-		return (ft_no_change(stks));
-	top = stks->top_b;
-	stks->buf_b = stks->stk_b[top];
-	stks->stk_b[top] = stks->stk_b[top + 1];
-	stks->stk_b[top + 1] = stks->buf_b;
-	ft_print_stacks(stks);
+	ft_strcpy(stacks->last, "sb");
+	stacks->opnum = 1;
+	if (stacks->b_amt_of_elems < 2)
+		return (no_change(stacks));
+	top = stacks->b_top;
+	stacks->b_buf = stacks->stack_b[top];
+	stacks->stack_b[top] = stacks->stack_b[top + 1];
+	stacks->stack_b[top + 1] = stacks->b_buf;
+	activate_verbose(stacks);
 }
 
 /*
 ** sa and sb at the same time.
 */
 
-void		ss(t_stack *stks)
+void		ss(t_stack *stacks)
 {
 	int		buffer;
 
-	ft_strcpy(stks->last, "ss");
-	stks->opnum = 2;
-	if (stks->elems_a < 2 || stks->elems_b < 2)
-		return (ft_no_change(stks));
-	buffer = stks->flag;
-	stks->flag = 0;
-	sa(stks);
-	sb(stks);
-	stks->flag = buffer;
-	ft_strcpy(stks->last, "ss");
-	ft_print_stacks(stks);
+	ft_strcpy(stacks->last, "ss");
+	stacks->opnum = 2;
+	if (stacks->a_amt_of_elems < 2 || stacks->b_amt_of_elems < 2)
+		return (no_change(stacks));
+	buffer = stacks->count_flag;
+	stacks->count_flag = 0;
+	sa(stacks);
+	sb(stacks);
+	stacks->count_flag = buffer;
+	ft_strcpy(stacks->last, "ss");
+	activate_verbose(stacks);
 }
 
 /*
@@ -78,29 +78,30 @@ void		ss(t_stack *stks)
 ** Do nothing if b is empty.
 */
 
-void		pa(t_stack *stks)
+void		pa(t_stack *stacks)
 {
 	int		size;
 
-	ft_strcpy(stks->last, "pa");
-	stks->opnum = 3;
-	if (stks->elems_b == 0)
-		return (ft_no_change(stks));
-	size = stks->size - 1;
-	if (stks->top_a == size && stks->elems_a == 0)
-		stks->stk_a[(stks->top_a)] = stks->stk_b[(stks->top_b)];
+	ft_strcpy(stacks->last, "pa");
+	stacks->opnum = 3;
+	if (stacks->b_amt_of_elems == 0)
+		return (no_change(stacks));
+	size = stacks->size - 1;
+	if (stacks->a_top == size && stacks->a_amt_of_elems == 0)
+		stacks->stack_a[(stacks->a_top)] = stacks->stack_b[(stacks->b_top)];
 	else
 	{
-		stks->stk_a[((stks->top_a) - 1)] = stks->stk_b[(stks->top_b)];
-		(stks->top_a)--;
+		stacks->stack_a[((stacks->a_top) - 1)] = \
+											stacks->stack_b[(stacks->b_top)];
+		(stacks->a_top)--;
 	}
-	if (stks->top_b != size)
-		(stks->top_b)++;
+	if (stacks->b_top != size)
+		(stacks->b_top)++;
 	else
-		stks->top_b = size;
-	(stks->elems_b)--;
-	(stks->elems_a)++;
-	ft_print_stacks(stks);
+		stacks->b_top = size;
+	(stacks->b_amt_of_elems)--;
+	(stacks->a_amt_of_elems)++;
+	activate_verbose(stacks);
 }
 
 /*
@@ -108,27 +109,28 @@ void		pa(t_stack *stks)
 ** Do nothing if a is empty.
 */
 
-void		pb(t_stack *stks)
+void		pb(t_stack *stacks)
 {
 	int		size;
 
-	ft_strcpy(stks->last, "pb");
-	stks->opnum = 4;
-	if (stks->elems_a == 0)
-		return (ft_no_change(stks));
-	size = (stks->size - 1);
-	if (stks->top_b == size && stks->elems_b == 0)
-		stks->stk_b[(stks->top_b)] = stks->stk_a[(stks->top_a)];
+	ft_strcpy(stacks->last, "pb");
+	stacks->opnum = 4;
+	if (stacks->a_amt_of_elems == 0)
+		return (no_change(stacks));
+	size = (stacks->size - 1);
+	if (stacks->b_top == size && stacks->b_amt_of_elems == 0)
+		stacks->stack_b[(stacks->b_top)] = stacks->stack_a[(stacks->a_top)];
 	else
 	{
-		stks->stk_b[((stks->top_b) - 1)] = stks->stk_a[(stks->top_a)];
-		(stks->top_b)--;
+		stacks->stack_b[((stacks->b_top) - 1)] = \
+											stacks->stack_a[(stacks->a_top)];
+		(stacks->b_top)--;
 	}
-	if (stks->top_a != size)
-		(stks->top_a)++;
+	if (stacks->a_top != size)
+		(stacks->a_top)++;
 	else
-		stks->top_a = size;
-	(stks->elems_a)--;
-	(stks->elems_b)++;
-	ft_print_stacks(stks);
+		stacks->a_top = size;
+	(stacks->a_amt_of_elems)--;
+	(stacks->b_amt_of_elems)++;
+	activate_verbose(stacks);
 }

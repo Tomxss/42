@@ -10,38 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shared_s/push_swap.h"
+#include "push_swap.h"
 
 /*
 ** rotate a - shift up all elements of stack a by 1.
 ** The first element becomes the last one.
 */
 
-void			ra(t_stack *stks)
+void			ra(t_stack *stacks)
 {
 	int			elems;
 	int			top;
 
-	ft_strcpy(stks->last, "ra");
-	stks->opnum = 5;
-	if (stks->elems_a < 2)
-		return (ft_no_change(stks));
-	elems = stks->elems_a;
-	top = stks->top_a;
-	stks->buf_a = stks->stk_a[top];
+	ft_strcpy(stacks->last, "ra");
+	stacks->opnum = 5;
+	if (stacks->a_amt_of_elems < 2)
+		return (no_change(stacks));
+	elems = stacks->a_amt_of_elems;
+	top = stacks->a_top;
+	stacks->a_buf = stacks->stack_a[top];
 	while (elems > 0)
 	{
-		if ((top + 1) == stks->size - 1)
+		if ((top + 1) == stacks->size - 1)
 		{
-			stks->stk_a[top] = stks->stk_a[top + 1];
+			stacks->stack_a[top] = stacks->stack_a[top + 1];
 			break ;
 		}
-		stks->stk_a[top] = stks->stk_a[top + 1];
+		stacks->stack_a[top] = stacks->stack_a[top + 1];
 		top++;
 		elems--;
 	}
-	stks->stk_a[((stks->size) - 1)] = stks->buf_a;
-	ft_print_stacks(stks);
+	stacks->stack_a[((stacks->size) - 1)] = stacks->a_buf;
+	activate_verbose(stacks);
 }
 
 /*
@@ -49,48 +49,48 @@ void			ra(t_stack *stks)
 ** The first element becomes the last one.
 */
 
-void			rb(t_stack *stks)
+void			rb(t_stack *stacks)
 {
 	int			elems;
 	int			top;
 
-	ft_strcpy(stks->last, "rb");
-	stks->opnum = 6;
-	if (stks->elems_b < 2)
-		return (ft_no_change(stks));
-	elems = stks->elems_b;
-	top = stks->top_b;
-	stks->buf_b = stks->stk_b[top];
+	ft_strcpy(stacks->last, "rb");
+	stacks->opnum = 6;
+	if (stacks->b_amt_of_elems < 2)
+		return (no_change(stacks));
+	elems = stacks->b_amt_of_elems;
+	top = stacks->b_top;
+	stacks->b_buf = stacks->stack_b[top];
 	while (elems > 0)
 	{
-		if ((top + 1) < stks->size)
+		if ((top + 1) < stacks->size)
 		{
-			stks->stk_b[top] = stks->stk_b[top + 1];
+			stacks->stack_b[top] = stacks->stack_b[top + 1];
 			top++;
 		}
 		elems--;
 	}
-	stks->stk_b[((stks->size) - 1)] = stks->buf_b;
-	ft_print_stacks(stks);
+	stacks->stack_b[((stacks->size) - 1)] = stacks->b_buf;
+	activate_verbose(stacks);
 }
 
 /*
 **  ra and rb at the same time.
 */
 
-void			rr(t_stack *stks)
+void			rr(t_stack *stacks)
 {
 	int			buffer;
 
-	ft_strcpy(stks->last, "rr");
-	stks->opnum = 7;
-	if (stks->elems_a < 2 || stks->elems_b < 2)
-		return (ft_no_change(stks));
-	buffer = stks->flag;
-	stks->flag = 0;
-	ra(stks);
-	rb(stks);
-	stks->flag = buffer;
-	ft_strcpy(stks->last, "rr");
-	ft_print_stacks(stks);
+	ft_strcpy(stacks->last, "rr");
+	stacks->opnum = 7;
+	if (stacks->a_amt_of_elems < 2 || stacks->b_amt_of_elems < 2)
+		return (no_change(stacks));
+	buffer = stacks->count_flag;
+	stacks->count_flag = 0;
+	ra(stacks);
+	rb(stacks);
+	stacks->count_flag = buffer;
+	ft_strcpy(stacks->last, "rr");
+	activate_verbose(stacks);
 }
