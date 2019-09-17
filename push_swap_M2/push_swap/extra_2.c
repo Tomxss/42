@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+
 int			atoi_werror(const char *str, int *error)
 {
 	long long result;

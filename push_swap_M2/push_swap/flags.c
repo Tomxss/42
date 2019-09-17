@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	check_flags(int **flags, int *flag_count, char **string, int ac)
+void	check_flags(int **flags, char **string, int ac)
 {
 	int i;
 

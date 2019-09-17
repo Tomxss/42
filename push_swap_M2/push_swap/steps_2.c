@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+
 static char		*get_step_name(int oper)
 {
 	if (oper == 0)

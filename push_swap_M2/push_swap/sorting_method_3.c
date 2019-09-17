@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+
 int				candidates(int ua, int da, int ub, int db)
 {
 	int			candidate[5];

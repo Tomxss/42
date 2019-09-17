@@ -66,6 +66,16 @@ typedef struct	s_oper
 int				input_error_found(int *ac, char **av, int **formatted_input,\
 				int **flags);
 int				atoi_werror(const char *str, int *error);
+void			check_flags(int **flags, char **string, int ac);
+int				down_b_helper(t_stack *stacks, int index);
+t_oper			*internal_loop(t_stack *stacks, int in, int ex, int num_oper);
+void			free_steps(t_oper **list);
+void			finalize_stacks(t_stack *stacks);
+int				candidates(int ua, int da, int ub, int db);
+t_oper			*ua_ub(int ua, int ub);
+t_oper			*da_db(int da, int db);
+t_oper			*ua_db(int ua, int db);
+t_oper			*da_ub(int da, int ub);
 int				free_2d_array(char **array, int size);
 t_stack			*initiate_stacks(int *stack_a, int size, int *flag);
 void			activate_verbose(t_stack *stacks);

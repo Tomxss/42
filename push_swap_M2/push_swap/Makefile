@@ -26,17 +26,25 @@ SHARED_OBJ = $(SHARED_FILES:.c=.o)
 
 PUSH_FILES = push_swap.c
 PUSH_FILES += error_handling.c
-PUSH_FILES += extra.c
-PUSH_FILES += solutions.c
-PUSH_FILES += sorting_method.c
+PUSH_FILES += extra_1.c
+PUSH_FILES += extra_2.c
+PUSH_FILES += solutions_1.c
+PUSH_FILES += solutions_2.c
+PUSH_FILES += sorting_method_1.c
+PUSH_FILES += sorting_method_2.c
+PUSH_FILES += sorting_method_3.c
+PUSH_FILES += sorting_method_4.c
 PUSH_FILES += stack_initial.c
 PUSH_FILES += stack_staging.c
-PUSH_FILES += steps.c
+PUSH_FILES += steps_1.c
+PUSH_FILES += steps_2.c
+PUSH_FILES += steps_3.c
 PUSH_FILES += verbose_mode.c
+PUSH_FILES += flags.c
 PUSH_OBJ = $(PUSH_FILES:.c=.o)
 
 all: $(NAME2)
-	make re -C $(LIBFT_F)
+	make -C $(LIBFT_F)
 $(NAME2):
 	echo "$(NAME2) compiling... \c"; \
 	gcc -Wall -Wextra -Werror -c $(PUSH_FILES) $(SHARED_FILES); \

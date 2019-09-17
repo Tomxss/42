@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+
 /*
 **	EVERYTHING TO DO WITH STEPS
 */
@@ -40,7 +42,7 @@ static t_oper	*check_steps(t_stack *stacks, int index)
 		return (NULL);
 }
 
-static t_oper	*internal_loop(t_stack *stacks, int in, int ex, int num_oper)
+t_oper	*internal_loop(t_stack *stacks, int in, int ex, int num_oper)
 {
 	t_oper		*candidate;
 	t_oper		*answer;

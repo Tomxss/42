@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+
 static int		a_placement(t_stack *stacks)
 {
 	int			index;

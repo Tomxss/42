@@ -45,7 +45,7 @@ static int	find_flags(int **flags, int *flag_count, char **string, int ac)
 	(*flags)[3] = 0;
 	(*flags)[4] = 0;
 	*flag_count = 0;
-	check_flags(&*flags, &flag_count, &*string, ac);
+	check_flags(&*flags, &*string, ac);
 	i = -1;
 	while (++i < 5)
 		*flag_count += (*flags)[i];
