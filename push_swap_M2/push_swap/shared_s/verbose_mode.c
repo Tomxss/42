@@ -68,8 +68,13 @@ static void		print_stack_a(int *elem_a, int *a_topi, t_stack *stacks, int *i)
 static void		print_info(t_stack *stacks, int num, int *index)
 {
 	if (num == 1)
-		ft_printf("%s - - - - - - - - - - - - - %d\n\n",
-	stacks->last, (stacks->step)++);
+		if (stacks->count == 1)
+		{
+			ft_printf("%s - - - - - - - - - - - - - %d\n",\
+					stacks->last, (stacks->step)++);
+		}
+		else
+			ft_printf("%s - - - - - - - - - - - - -  \n", stacks->last);
 	else if (num == 2)
 	{
 		while (*index < stacks->size)

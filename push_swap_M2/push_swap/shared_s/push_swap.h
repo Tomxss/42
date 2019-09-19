@@ -42,7 +42,7 @@ typedef struct	s_stack
 	int			flag;
 	int			amt_of_ops;
 	int			step;
-	int			game;
+	int			count;
 	int			clear;
 	char		last[4];
 	int			opnum;
@@ -75,8 +75,9 @@ t_stack			*initialize_stack(int *stack_a, int size, int *flag);
 int				is_in_order(int *formatted_input, int size);
 int				is_stack_in_order(t_stack *stacks);
 void			free_all(
-				int *formatted_input, t_stack *stacks, t_oper **commands, int *flags);
+int				*formatted_input, t_stack *stacks, t_oper **commands, int *flags);
 void			activate_verbose(t_stack *stacks);
+void 			activate_help(void);
 void			no_change(t_stack *stacks);
 void			free_commands(t_oper **commands);
 int				ft_count_words(const char *str, char c);

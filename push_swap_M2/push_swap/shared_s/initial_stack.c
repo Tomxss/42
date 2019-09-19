@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../shared_s/push_swap.h"
+#include <stdio.h>
 
 static void		set_stack_a(t_stack *stacks, int *stack_a, int size)
 {
@@ -40,7 +41,7 @@ static void		set_ext(t_stack *stacks, int *flag, int size)
 	stacks->a_buf = 0;
 	stacks->b_buf = 0;
 	stacks->flag = flag[0];
-	stacks->game = flag[1];
+	stacks->count = flag[1];
 	stacks->step = 0;
 	stacks->amt_of_ops = 0;
 	stacks->clear = 0;
@@ -64,7 +65,11 @@ t_stack			*initialize_stack(int *stack_a, int size, int *flag)
 		return (NULL);
 	}
 	set_ext(stacks, flag, size);
-	if (!flag[1])
+
+	if (flag[0] == 1 || flag[1] == 1)
 		activate_verbose(stacks);
+	if (flag[2] == 1)
+		activate_help();
+
 	return (stacks);
 }

@@ -16,8 +16,14 @@ void		no_change(t_stack *stacks)
 {
 	if (stacks->flag == 0)
 		return ;
-	ft_printf("%s - - - - - - - - - - - - - %d\n",
+	if (stacks->count == 1)
+	{
+		ft_printf("%s - - - - - - - - - - - - - %d\n",\
 				stacks->last, (stacks->step)++);
+	}
+	else
+		ft_printf("%s - - - - - - - - - - - - -  \n", stacks->last);
+
 	ft_printf("%10s no change\n", stacks->last);
 }
 

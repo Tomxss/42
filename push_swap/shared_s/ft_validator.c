@@ -35,7 +35,7 @@ static int		ft_atoi_werror(const char *str, int *error)
 			str++;
 		}
 		result = result * sign;
-		if (*str >= 1 && *str <= 127 || result < MININT || result > MAXINT)
+		if ((*str >= 1 && *str <= 127) || result < MININT || result > MAXINT)
 			return (*error = 0);
 	}
 	return ((int)result);

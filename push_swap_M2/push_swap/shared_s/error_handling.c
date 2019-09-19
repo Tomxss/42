@@ -72,23 +72,40 @@ static int		check_flags(int **flags, int *flag, char **av, int ac)
 	*flags = (int*)malloc(sizeof(int) * 2);
 	(*flags)[0] = 0;
 	(*flags)[1] = 0;
+	(*flags)[2] = 0;
+	(*flags)[3] = 0;
+	(*flags)[4] = 0;
 	*flag = 0;
 	if (ac > 2)
 	{
 		if (ft_strcmp(av[0], "-v") == 0 && ft_strcmp(av[1], "-v") == 0)
 			return (-1);
-		if (ft_strcmp(av[0], "-g") == 0 && ft_strcmp(av[1], "-g") == 0)
+		if (ft_strcmp(av[0], "-vc") == 0 && ft_strcmp(av[1], "-vc") == 0)
+			return (-1);
+		if (ft_strcmp(av[0], "-vc") == 0 && ft_strcmp(av[1], "-v") == 0)
+			return (-1);
+		if (ft_strcmp(av[0], "-h") == 0 && ft_strcmp(av[1], "-h") == 0)
+			return (-1);
+		if (ft_strcmp(av[0], "-e") == 0 && ft_strcmp(av[1], "-e") == 0)
+			return (-1);
+		if (ft_strcmp(av[0], "-d") == 0 && ft_strcmp(av[1], "-d") == 0)
 			return (-1);
 	}
 	if (ft_strcmp(av[0], "-v") == 0)
 		(*flags)[0] = 1;
-	else if (ac > 2 && ft_strcmp(av[1], "-v") == 0)
+	if (ft_strcmp(av[0], "-vc") == 0)
+	{
+		(*flags)[1] = 1;
 		(*flags)[0] = 1;
-	if (ft_strcmp(av[0], "-g") == 0)
-		(*flags)[1] = 1;
-	else if (ac > 2 && ft_strcmp(av[1], "-g") == 0)
-		(*flags)[1] = 1;
-	*flag = *(flags)[0] + (*flags)[1];
+	}
+	if (ft_strcmp(av[0], "-h") == 0)
+		(*flags)[2] = 1;
+	if (ft_strcmp(av[0], "-e") == 0)
+		(*flags)[3] = 1;
+	if (ft_strcmp(av[0], "-d") == 0)
+		(*flags)[4] = 1;
+
+	*flag = *(flags)[0] + (*flags)[1] + (*flags)[2] + (*flags)[3] + (*flags)[4];
 	return (0);
 }
 

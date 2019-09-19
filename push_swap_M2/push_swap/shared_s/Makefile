@@ -17,7 +17,7 @@ RM = /bin/rm -rfv
 RMS = /bin/rm -rf
 CFILES = error_handling.c extra_1.c initial_stack.c swap.c
 CFILES += rotate.c rev_rotate.c verbose_mode.c
-CFILES += commands.c extra_2.c
+CFILES += commands.c extra_2.c extra_modes.c
 OFILES = $(CFILES:.c=.o)
 
 all: $(NAME)

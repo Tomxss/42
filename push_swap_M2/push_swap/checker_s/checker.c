@@ -119,8 +119,8 @@ int				main(int ac, char **av)
 	{
 		if (!(stacks = initialize_stack(*&formatted_input, ac - flags[0] - flags[1], flags)))
 			ft_putstr_fd("Error\n", 2);
-		else if (stacks->game == 1 && (stacks->flag = 1))
-			ft_game_mode(stacks);
+		//else if (stacks->game == 1 && (stacks->flag = 1))
+		//	ft_game_mode(stacks);
 		else if (ft_read_arguments(&commands) == -1)
 			ft_putstr_fd("Error\n", 2);
 		else
