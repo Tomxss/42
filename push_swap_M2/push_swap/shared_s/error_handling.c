@@ -69,12 +69,10 @@ static int		is_duplicates(int *formatted_input, int size)
 
 static int		check_flags(int **flags, int *flag, char **av, int ac)
 {
-	*flags = (int*)malloc(sizeof(int) * 2);
+	*flags = (int*)malloc(sizeof(int) * 3);
 	(*flags)[0] = 0;
 	(*flags)[1] = 0;
 	(*flags)[2] = 0;
-	(*flags)[3] = 0;
-	(*flags)[4] = 0;
 	*flag = 0;
 	if (ac > 2)
 	{
@@ -86,10 +84,6 @@ static int		check_flags(int **flags, int *flag, char **av, int ac)
 			return (-1);
 		if (ft_strcmp(av[0], "-h") == 0 && ft_strcmp(av[1], "-h") == 0)
 			return (-1);
-		if (ft_strcmp(av[0], "-e") == 0 && ft_strcmp(av[1], "-e") == 0)
-			return (-1);
-		if (ft_strcmp(av[0], "-d") == 0 && ft_strcmp(av[1], "-d") == 0)
-			return (-1);
 	}
 	if (ft_strcmp(av[0], "-v") == 0)
 		(*flags)[0] = 1;
@@ -100,12 +94,8 @@ static int		check_flags(int **flags, int *flag, char **av, int ac)
 	}
 	if (ft_strcmp(av[0], "-h") == 0)
 		(*flags)[2] = 1;
-	if (ft_strcmp(av[0], "-e") == 0)
-		(*flags)[3] = 1;
-	if (ft_strcmp(av[0], "-d") == 0)
-		(*flags)[4] = 1;
 
-	*flag = *(flags)[0] + (*flags)[1] + (*flags)[2] + (*flags)[3] + (*flags)[4];
+	*flag = *(flags)[0] + (*flags)[2];
 	return (0);
 }
 

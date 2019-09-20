@@ -30,7 +30,7 @@ int				main(int ac, char **av)
 		ft_putstr_fd("Error\n", 2);
 	else
 	{
-		if (!(stacks = initialize_stack(*&formatted_input, ac - flags[0] - flags[1], flags)))
+		if (!(stacks = initialize_stack(*&formatted_input, ac - flags[0] - flags[2], flags)))
 			ft_putstr_fd("Error\n", 2);
 		else if (push_swap(*&stacks) == -1)
 			ft_putstr_fd("Error\n", 2);
