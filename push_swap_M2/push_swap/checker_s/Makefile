@@ -21,7 +21,7 @@ SLIB = slib.a
 LIBFT_F = ../libft/
 LIBFT = libft.a
 OUT = ../
-CFILES = action.c checker.c history.c print.c startup.c
+CFILES = checker.c
 OFILES = $(CFILES:.c=.o)
 
 all: $(NAME)
@@ -50,12 +50,4 @@ fclean: clean
 	@$(RM) $(NAME) | wc -l | tr '\n' ' ' && echo $(NAME) deleted
 
 re: fclean all
-
-silent_clean:
-	@$(RMS) $(OFILES)
-
-silent_fclean: silent_clean
-	@$(RMS) $(NAME)
-
-silent_re: silent_fclean all
 

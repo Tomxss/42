@@ -121,18 +121,9 @@ int				return_up_b_helper(t_stack *stacks, int index);
 int				return_down_b_helper(t_stack *stacks, int index);
 void			clean_a(t_stack *stacks);
 /*
-** checker, game mode -g
+** checker
 */
 t_oper			*new_oper(char *str);
 void			add_oper(t_oper **commands, t_oper **new);
-void			print_commands(t_oper *commands);
-void			ft_game_mode(t_stack *stacks);
-int				ft_game_act(char *argument, t_stack *stacks, t_history *history);
-void			ft_print_list_of_commands(void);
-void			ft_print_history(t_history *history, int flag);
-int				ft_check_game_command(char *str);
-t_history		*ft_add_history(t_history **history, char *argument);
-void			ft_clean_the_game_history(t_history **history);
-char			*ft_return_oper_name(char *str);
 
 #endif
