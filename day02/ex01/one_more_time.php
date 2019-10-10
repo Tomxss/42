@@ -3,14 +3,18 @@
 	if ($argc == 2)
 	{
 	$valid = 0;
+        /*change first character to uppercase*/
 	$str = ucwords($argv[1]);
+        /*if ' ' appears 4 times then explode*/
 	if (substr_count($str,' ') == 4)
+        /*explode converts a string into an array*/
 		$arr = explode(" ", "$str");
 	else
 	{
 		echo "Wrong Format\n";
 		exit(-1);
 	}
+        /*associative array (pairing)*/
 	$d = array(
 		"Monday" => "Lundi",
 		"Tuesday" => "Mardi",
@@ -32,8 +36,11 @@
 		"10" => "Octobre",
 		"11" => "Novembre",
 		"12" => "Decembre");
+        /*searches for a specific value, in this case $d*/
 	if (in_array($arr[0], $d))
 		$valid += 1;
+        /*checks if a value contains a specific value*/
+        /*/^Beginning of string; $end of the string /*/
 	if (preg_match("/^(([0-3]){1}([0-9]){1}|([1-9]){1})$/", $arr[1]) &&
 		$arr[1] > 0 && $arr[1] < 32)
 		$valid += 1;
@@ -56,7 +63,9 @@
 		echo "Wrong Format\n";
 		exit(-1);
 	}
+        /*converts 20th of June, 2007 (gregorian calender to Julian Day COunt) 2454272*/
 	$jd = cal_to_jd(CAL_GREGORIAN, array_search($arr[2], $m),$arr[1],$arr[3]);
+        /*return the weekday of 13th january, 1998*/
 	if (jddayofweek($jd,1) == array_search($arr[0], $d))
 	{
 		$stamp .= $arr[3].'-'.array_search($arr[2], $m).'-'.$arr[1].' '.$arr[4];
