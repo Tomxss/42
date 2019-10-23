@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Camagru</title>
-      <link rel="stylesheet" href="http://localhost:8080/Snap_it/style.css">
+      <link rel="stylesheet" href="http://localhost:8080/camagru/style.css">
 <script>
   Cache-Control:no-cache, no-store;
 </script>
@@ -54,7 +54,12 @@
       </li>-->
     </ul>
     <div class="form-inline my-2 my-lg-0">
+
+    <?php if ($_SESSION['id']) { ?>
+      <a class="btn btn-outline-success my-2 my-sm-0" href="?function=logout">Logout</a>
+    <?php } else { ?>
       <button class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#myModal">Login/Sign up</button>
+    <?php } ?>
     </div>
   </div>
 </nav>

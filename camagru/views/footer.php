@@ -28,6 +28,7 @@
         </button>
       </div>
       <div class="modal-body">
+      <div class="alert alert-danger" id="loginAlert"></div>
 <form>
     <input type="hidden" id="loginActive" name="loginActive" value="1">
   <div class="form-group">
@@ -71,7 +72,11 @@
             url: "actions.php?action=loginSignup",
             data: "email=" + $("#email").val() + "&password=" + $("#password").val() + "&loginActive=" + $("#loginActive").val(),
             success: function(result) {
-            alert(result);
+              if (result == "1") {
+                window.location.assign("http://localhost:8080/camagru/");
+              } else {
+                $("#loginAlert").html(result).show();
+              }
         }    
         })
     })

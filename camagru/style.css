@@ -2,6 +2,11 @@
     padding-right: 20px;
 }
 
+#loginAlert {
+
+  display:none;
+
+}
 .container {
   width: auto;
   max-width: 680px;
