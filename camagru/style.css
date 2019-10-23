@@ -7,10 +7,32 @@
   display:none;
 
 }
+
+.mainContainer {
+    
+    padding: 20px;
+    
+}
+
+.time {
+    
+    color: lightgrey;
+    
+}
+
+.post {
+    
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    
+}
+
+
 .container {
   width: auto;
-  max-width: 680px;
-  padding: 0 15px;
+
 }
 
 .footer {

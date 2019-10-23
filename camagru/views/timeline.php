@@ -3,9 +3,9 @@
     <div class="row">
         <div class="col-7">
 
-            <h2>Recent Posts</h2>
+            <h2>Posts For You</h2>
 
-            <?php displayPosts('public'); ?>
+            <?php displayPosts('isFollowing'); ?>
 
         </div>
         <div class="col-5">

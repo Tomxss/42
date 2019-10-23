@@ -10,14 +10,11 @@
 
     <title>Camagru</title>
       <link rel="stylesheet" href="http://localhost:8080/camagru/style.css">
-<script>
-  Cache-Control:no-cache, no-store;
-</script>
   </head>
     <body>
         
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Camagru</a>
+  <a class="navbar-brand" href="http://localhost:8080/camagru/">Camagru</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -32,7 +29,7 @@
           You
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Timeline</a>
+          <a class="dropdown-item" href="http://localhost:8080/camagru/?page=timeline">Timeline</a>
           <a class="dropdown-item" href="#">Posts</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Profile</a>
